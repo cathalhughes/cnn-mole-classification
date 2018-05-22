@@ -83,7 +83,19 @@ def train_top_model(saved, weight, files):
     print(hist.history)
 
 
-save_bottleneck_features()
-train_top_model()
+#save_bottleneck_features()
+#train_top_model()
+
+paths = [("trainEc", "validationEc"), ("trainHi", "validationHi"),("trainPs", "validationPs"),("trainRw", "validationRw"),("trainSh", "validationSh")]
+bottlenecks = [("bottleneck_Ec", "validation_Ec"), ("bottleneck_Hi", "validation_Hi"),("bottleneck_Ps", "validation_Ps"),("bottleneck_Rw", "validation_Rw"),("bottleneck_Sh", "validation_Sh")]
+weights = ["fc_Ec.h5", "fc_Hi.h5", "fc_Ps.h5", "fc_Rw.h5", "fc_Sh.h5"]
+txtfile = ["Ec.txt", "Hi.txt","Ps.txt","Rw.txt","Sh.txt"]
+
+for i in range(len(paths)):
+    print("here")
+    save_bottleneck_features(paths[i], bottlenecks[i])
+    print("done saving now to train")
+    train_top_model(bottlenecks[i], weights[i], txtfile[i])
+    K.clear_session()
 
 print("Done training")    
